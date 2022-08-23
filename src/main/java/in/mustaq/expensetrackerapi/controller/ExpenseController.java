@@ -23,56 +23,59 @@ import in.mustaq.expensetrackerapi.entity.Expense;
 import in.mustaq.expensetrackerapi.service.ExpenseService;
 
 @RestController
-@RequestMapping("/expenses")
 public class ExpenseController {
 
 	@Autowired
 	private ExpenseService expenseService;
 	
-
-	@GetMapping
+	@GetMapping("/")
+	public String getExpense() {
+		return "Welcome to expense Manager API";
+	}
+	
+	@GetMapping("/expenses")
 	public List<Expense> getAllExpenses(Pageable page) {
 		return expenseService.getAllExpenses(page).toList();
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping("expenses/{id}")
 	public Expense getExpenseById(@PathVariable("id") Long id) {
 		return expenseService.getExpenseById(id);
 	}
 
 	@ResponseStatus(value = HttpStatus.NO_CONTENT)
-	@DeleteMapping
+	@DeleteMapping("/expenses")
 	public void deleteExpenseById(@RequestParam("id") Long id) {
 		expenseService.deleteExpenseId(id);
 	}
 
 	@ResponseStatus(value = HttpStatus.CREATED)
-	@PostMapping
+	@PostMapping("/expenses")
 	public Expense saveExpenseDetails(@Valid @RequestBody Expense expense) {
 
 		return expenseService.saveExpenseDetails(expense);
 
 	}
 
-	@PutMapping("/{id}")
+	@PutMapping("/expenses/{id}")
 	public Expense updateExpenseDetails(@RequestBody Expense expense, @PathVariable Long id) {
 		return expenseService.updateExpenseDetails(id, expense);
 
 	}
 
-	@GetMapping("/category")
+	@GetMapping("expenses/category")
 	public List<Expense> getAllExpensesByCategory(@RequestParam String category, Pageable page) {
 		return expenseService.readByCategory(category, page);
 
 	}
 
-	@GetMapping("/name")
+	@GetMapping("expenses/name")
 	public List<Expense> getAllExpensesByName(@RequestParam String keyword, Pageable page) {
 		return expenseService.readByName(keyword, page);
 
 	}
 
-	@GetMapping("/date")
+	@GetMapping("expenses/date")
 	public List<Expense> getAllExpensesBetweenDates(@RequestParam(required = false) Date startDate,
 			@RequestParam(required = false) Date endDate, Pageable page) {
 		return expenseService.readByDate(startDate, endDate, page);
