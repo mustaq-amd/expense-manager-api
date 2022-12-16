@@ -54,7 +54,7 @@ public class AuthController {
 	 * }
 	 */
 
-	@PostMapping("/login")
+	@PostMapping("/loginn")
 	public ResponseEntity<JwtResponse> login(@RequestBody LoginModel loginModel) throws Exception {
 
 		authenticate(loginModel.getEmail(), loginModel.getPassword());

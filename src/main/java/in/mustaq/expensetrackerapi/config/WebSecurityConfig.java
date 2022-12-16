@@ -42,12 +42,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 			.csrf().disable()
 			.authorizeRequests()
-			.antMatchers("/login","/register","/").permitAll()
+			.antMatchers("/loginn","/register","/")
+			.permitAll()
 			.anyRequest().authenticated()
+			.and().formLogin()
 			.and()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 		http.httpBasic();
+		
 		
 	}
 
